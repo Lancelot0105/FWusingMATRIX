@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: dummypipeliness
+spec:
+  params:
+    - name: main_arr
+      type: array
+  tasks:
+  - name: arr0
+    taskRef:
+      name: flyway
+    matrix:
+      params:
+        - name: list
+          value: ["db1","db2","db3","db4","db5","db6","db7","db8","db9"]
+  - name: arr1
+    taskRef:
+      name: flyway
+    runAfter:
+      - arr0
+    matrix:
+      params:
+        - name: list
+          value: ["db10","db11","db12","db13","db14","db15","db16","db17","db18"]
+  - name: arr2
+    taskRef:
+      name: flyway
+    runAfter:
+      - arr1
+    matrix:
+      params:
+        - name: list
+          value: ["db19","db20"]
